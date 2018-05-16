@@ -8,11 +8,8 @@ app.controller('EmailCtrl', ['$scope', '$http', function ($scope, $http) {
         to: '',
         templateId: ''
     };
-
     $scope.templates = templates;
-    debugger;
     $scope.sendEmail = function () {
-        debugger;
         $http.post('/send_email', $scope.credentials, {})
             .then(function (resp) {
             });
