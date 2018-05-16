@@ -1,0 +1,43 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body ng-controller="EmailCtrl">
+
+<div class="form-group">
+  <h1>Send Email</h1>
+  <div class="row">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-3">
+      <label>Enter email server:</label>
+      <input type="text" class="form-control" ng-model="credentials.server" placeholder="Email server" id="server">
+      <br>
+      <label>Enter *From* email address:</label>
+      <input type="email" class="form-control" ng-model="credentials.from" placeholder="Email Address" id="from">
+      <br>
+      <label>Enter Password:</label>
+      <input type="password" class="form-control" ng-model="credentials.password" placeholder="Password" id="pwd">
+      <br>
+      <label for="singleSelect">Select email template:</label>
+      <select id="singleSelect" class="form-control" ng-model="credentials.templateId">
+        <option value="">Select Email Template</option>
+        <option value="{{template.id}}" ng-repeat="template in templates">{{template.body}}</option>
+      </select>
+      <br>
+      <label>Enter *To* email address:</label>
+      <input type="text" class="form-control" ng-model="credentials.to" placeholder="Email Address" id="to">
+      <br>
+      <br>
+      <button ng-click="sendEmail()" type="button" class="btn btn-primary">Send Email</button>
+    </div>
+  </div>
+</div>
+</body>
+</html>
+
+<%= javascript_tag do %>
+  var templates = <%= @templates.to_json.html_safe %>;
+<% end %>

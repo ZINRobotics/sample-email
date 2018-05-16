@@ -1,5 +1,6 @@
 class TemplatesController < ApplicationController
   before_action :set_template, only: [:show, :edit, :update, :destroy]
+  protect_from_forgery with: :null_session, only: [:send_email]
 
   # GET /templates
   # GET /templates.json
@@ -59,6 +60,20 @@ class TemplatesController < ApplicationController
       format.html { redirect_to templates_url, notice: 'Template was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def email
+    @templates = Template.all
+    render 'email/index'
+  end
+
+  def send_email
+    from_email = params[:from]
+    server = params[:server]
+    username = params[:username]
+    password = params[:password]
+    to_email = params[:to]
+    template = Template.find(params[:templateId])
   end
 
   private
