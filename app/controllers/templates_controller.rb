@@ -74,6 +74,7 @@ class TemplatesController < ApplicationController
     password = params[:password]
     to_email = params[:to]
     template = Template.find(params[:templateId])
+    ApplicationMailer.send_email(from_email, server, username, password, to_email, template)
   end
 
   private
