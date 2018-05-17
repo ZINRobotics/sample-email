@@ -1,7 +1,6 @@
 class TemplatesController < ApplicationController
   before_action :set_template, only: [:show, :edit, :update, :destroy]
-  # protect_from_forgery with: :null_session, only: [:send_email]
-  skip_before_action :verify_authenticity_token, only: [:send_email]
+  protect_from_forgery with: :null_session, only: [:send_email]
 
   # GET /templates
   # GET /templates.json

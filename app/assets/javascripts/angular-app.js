@@ -12,6 +12,7 @@ app.controller('EmailCtrl', ['$scope', '$http', function ($scope, $http) {
     $scope.sendEmail = function () {
         $http.post('/send_email', $scope.credentials, {})
             .then(function (resp) {
+                alert('Email has been sent successfully!')
             });
     }
 }]);
