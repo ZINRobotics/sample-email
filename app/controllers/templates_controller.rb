@@ -1,6 +1,7 @@
 class TemplatesController < ApplicationController
   before_action :set_template, only: [:show, :edit, :update, :destroy]
-  protect_from_forgery with: :null_session, only: [:send_email]
+  # protect_from_forgery with: :null_session, only: [:send_email]
+  skip_before_action :verify_authenticity_token, only: [:send_email]
 
   # GET /templates
   # GET /templates.json
@@ -68,13 +69,24 @@ class TemplatesController < ApplicationController
   end
 
   def send_email
-    from_email = params[:from]
+    username = params[:from]
     server = params[:server]
-    username = params[:username]
     password = params[:password]
     to_email = params[:to]
     template = Template.find(params[:templateId])
-    ApplicationMailer.send_email(from_email, server, username, password, to_email, template)
+
+    delivery_options = { user_name: username,
+                         password: password,
+                         address: server}
+
+    ActionMailer::Base.mail(
+        from: username,
+        to: to_email,
+        subject: "Hello from Sample-Email!",
+        body: template.body,
+        content_type: "text/html",
+        delivery_method_options: delivery_options
+    ).deliver
   end
 
   private
